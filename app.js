@@ -5,23 +5,24 @@ const path = require("path");
 const puppeteer = require("puppeteer-core");
 const pc = require('picocolors');
 
-
-
-let configData = fs.readFileSync(path.resolve(process.cwd(), "config.json"), "utf-8");
+const configFilePath = path.join(process.cwd(), 'config.json')
+ 
+initConfigFile();
+let configData = fs.readFileSync(configFilePath, "utf-8");
 configData = JSON.parse(configData)
 const { executablePath, startId, searchStr, endId, sleep = 500 } = configData
 
-console.log(pc.green(`🚀🚀🚀执行配置：查询字段：${searchStr} 查询间隔：${500}毫秒`));
+console.log(pc.green(`🚀🚀🚀 执行配置：查询字段：${searchStr} , 查询间隔：${500}毫秒`));
 
 // https://dynamic.eeo.cn/saasajax/school.ajax.php?action=getOpenCourseMiddlePage
 setInterval(() => { }, 1000);
+
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
-
-const adapter = new FileSync(path.join(process.cwd(), 'cache.json'));
+const adapter = new FileSync(configFilePath);
 const db = low(adapter);
-db.defaults({ posts: [], date: null }).write();
 
+db.defaults({ posts: [], date: null }).write();
 
 const todayString = dayjs().format("YYYY-MM-DD");
 
@@ -79,7 +80,8 @@ async function createPage() {
 
 async function run() {
   if (!executablePath || !startId || !searchStr || !endId) {
-    console.log('config 缺失');
+    console.log('config 缺失参数');
+    return
   }
 
   const { page, browser } = await createPage()
@@ -87,6 +89,7 @@ async function run() {
   for (let i = 0; i < len; i++) {
     const cid = startId + i
     if (checkCidExist(cid)) {
+      console.log(`${i + 1}/${len} ${cid}`);
       continue
     }
     const res = await getRenderedHTML(page, cid)
@@ -139,4 +142,16 @@ function stringContainsIgnoreCase(str1, str2) {
     return false
   }
   return str1.toLowerCase().includes(str2.toLowerCase());
+}
+
+function initConfigFile() {
+  if (!fs.existsSync(configFilePath)) {
+    fs.writeFileSync(configFilePath, JSON.stringify({
+      "executablePath": "",
+      "startId": 267010735,
+      "endId": 267010736,
+      "searchStr": "",
+      "sleep": 1000
+    }, null, 2), 'utf-8');
+  }
 }
