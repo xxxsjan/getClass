@@ -100,7 +100,6 @@ async function run() {
       continue
     } else {
       const res = await getRenderedHTML(page, cid)
-      console.log('res: ', res);
       console.log(`${i + 1}/${len} https://share.eeo.cn/s/a/?cid=${cid} ${(res && res.courseName) || '班级链接已经失效'}`);
       await dbPushData(res)
       await delay(Number(sleep || 500))
