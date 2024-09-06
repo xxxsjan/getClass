@@ -1,0 +1,19 @@
+{
+  "name": "pkg",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "pkg": "pkg ./t.cjs --target node16-win-x64 --out-path dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "playwright": "1.44.1",
+    "prompts": "^2.4.2",
+    "readline": "^1.3.0"
+  }
+}
