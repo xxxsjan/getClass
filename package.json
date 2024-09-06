@@ -5,6 +5,7 @@
   "main": "app.js",
   "bin": "./app.js",
   "scripts": {
+    "start":" node app.js",
     "pkg_win": "pkg . --target win -o ./dist/app.exe",
     "pkg_win:debug": "pkg . --target win -o ./dist/dy-live.exe --debug",
     "debug": "pkg --target win --debug ."
@@ -14,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.7.2",
+    "dayjs": "^1.11.13",
     "lodash": "^4.17.21",
     "lowdb": "^1.0.0",
     "ms": "^2.1.3",

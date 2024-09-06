@@ -8,6 +8,9 @@ dependencies:
   bluebird:
     specifier: ^3.7.2
     version: 3.7.2
+  dayjs:
+    specifier: ^1.11.13
+    version: 1.11.13
   lodash:
     specifier: ^4.17.21
     version: 4.17.21
@@ -154,6 +157,10 @@ packages:
       node-fetch: 2.6.7
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
     dev: false
 
   /debug@4.3.4:
