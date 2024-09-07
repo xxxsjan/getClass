@@ -1,7 +1,8 @@
 {
-  "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-  "startId": 267010735,
-  "endId": 267010736,
-  "searchStr": "TK",
-  "sleep": 1000
+  "executablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+  "startId": 263931000,
+  "endId": 263935000,
+  "searchStr": "卓越",
+  "sleep": 50,
+  "refresh": true
 }
