@@ -1,8 +1,8 @@
 {
   "executablePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
   "startId": 263931000,
-  "endId": 263933000,
+  "endId": 263934000,
   "searchStr": "卓越",
   "sleep": 50,
-  "refresh": true
+  "refresh": false
 }

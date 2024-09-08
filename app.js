@@ -5,6 +5,9 @@ const path = require("path");
 const puppeteer = require("puppeteer-core");
 const pc = require('picocolors');
 
+// const log = require('single-line-log').stdout
+
+const ora = require('ora');
 const configFilePath = path.join(process.cwd(), 'config.json')
 
 initConfigFile();
@@ -12,8 +15,15 @@ let configData = fs.readFileSync(configFilePath, "utf-8");
 configData = JSON.parse(configData)
 const { executablePath, startId, searchStr, endId, sleep = 500, refresh = true } = configData
 
-console.log(pc.green(`🚀🚀🚀 执行配置：查询字段：${searchStr} , 查询间隔：${sleep}毫秒`));
+const spinner = ora(pc.green(`🚀🚀🚀 执行配置：查询字段：${searchStr} , 查询间隔：${sleep}毫秒`))
 
+spinner.color = 'green'
+
+spinner.start();
+
+function log (text){
+  spinner.text = text
+}
 // https://dynamic.eeo.cn/saasajax/school.ajax.php?action=getOpenCourseMiddlePage
 setInterval(() => { }, 1000);
 
@@ -102,18 +112,18 @@ async function run() {
     const cid = startId + i
     const cacheInfo = checkCidExist(cid)
     if (cacheInfo) {
-      console.log(`${i + 1}/${len} https://share.eeo.cn/s/a/?cid=${cid} ${cacheInfo.schoolName} ${calcSpeed(i + 1)}`);
+      log(`${i + 1}/${len} https://share.eeo.cn/s/a/?cid=${cid} ${cacheInfo.schoolName} ${calcSpeed(i + 1)}`);
       continue
     } else {
       const res = await getRenderedHTML(page, cid)
-      console.log(`${i + 1}/${len} https://share.eeo.cn/s/a/?cid=${cid} ${(res && res.courseName) || '班级链接已经失效'} ${calcSpeed(i + 1)}`);
+      log(`${i + 1}/${len} https://share.eeo.cn/s/a/?cid=${cid} ${(res && res.courseName) || '班级链接已经失效'} ${calcSpeed(i + 1)}`);
       await dbPushData(res)
       await delay(Number(sleep || 50) + randomDelay())
     }
   }
   console.timeEnd('耗时')
   outputResult()
-
+  spinner.succeed();
   await browser.close();
   function outputResult() {
     const posts = db.get("posts").value()
